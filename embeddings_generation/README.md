@@ -32,7 +32,7 @@ You will also need API keys for:
 
 3. Run the script:
     ```bash
-    python conversational_ai/conversational_ai.py
+    python embeddings_generation/embedder.py
     ```
 
 ## What it does
