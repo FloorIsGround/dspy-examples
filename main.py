@@ -1,0 +1,47 @@
+import dspy
+import os
+from dotenv import load_dotenv
+
+
+load_dotenv()
+
+gemini2_5_flash = dspy.LM("gemini/gemini-2.5-flash", api_key=os.getenv('google_ai_studio_key'), max_tokens=8192, num_retries=7)
+meituan_longcat_flash = dspy.LM("openrouter/meituan/longcat-flash-chat:free", api_base="https://openrouter.ai/api/v1", api_key=os.getenv('open_router_key'), max_tokens=8192, num_retries=7)
+gemini2_5_pro = dspy.LM("gemini/gemini-2.5-pro", api_key=os.getenv('google_ai_studio_key'), max_tokens=8192, num_retries=7)
+dspy.configure(lm=gemini2_5_pro)
+
+def flash_describe(text):
+    with dspy.context(lm=gemini2_5_flash, max_tokens=4096):
+        predictor = dspy.Predict("large_text->summary")
+        result = predictor(large_text=text)
+        return result['summary']
+    
+def pro_add_depth(text):
+    with dspy.context(lm=gemini2_5_pro, max_tokens=8192):
+        predictor = dspy.ChainOfThought("summary->defined_explanation")
+        result = predictor(summary=text)
+        return result['defined_explanation']
+    
+def longcat_add_depth(text):
+    with dspy.context(lm=meituan_longcat_flash, max_tokens=4096):
+        predictor = dspy.Predict("prompt->response")
+        result = predictor(prompt=text)
+        return result['response']
+
+
+
+
+def main():
+    print("Ask a question? Type exit when you are done.")
+    while True:
+        prompt = ""
+        prompt = input()
+        if prompt == 'exit':
+            return
+        
+        response = longcat_add_depth(text)
+        print(response)
+
+
+if __name__ == "__main__":
+    main()
