@@ -36,11 +36,14 @@ def main():
         prompt = ""
         prompt = input()
         if prompt == 'exit':
+            print("\n\nExiting...\n\n")
+            dspy.inspect_history()
             return
         
         result = longcat_conversation(prompt, history)
         print(result['response'])
         history.messages.append({"prompt": prompt, **result})
+    
 
 
 if __name__ == "__main__":

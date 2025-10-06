@@ -31,7 +31,7 @@ You will also need API keys for:
 
 3. Run the script:
     ```bash
-    python main.py
+    python conversational_ai.py
     ```
 
 ## What it does
