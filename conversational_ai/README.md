@@ -1,6 +1,6 @@
-# Some Examples for dspy
+# Conversational AI Example for dspy
 
-This project demonstrates simple usage of the `dspy` library with different language models for a wide range of uses.
+This project demonstrates simple usage of the `dspy` library with different language models for text-based conversation.
 
 ## Dependencies
 
@@ -8,16 +8,11 @@ This project demonstrates simple usage of the `dspy` library with different lang
 - [dspy](https://pypi.org/project/dspy/) >= 3.0.3
 - [python-dotenv](https://pypi.org/project/python-dotenv/) (for loading API keys from `.env`)
 
-You will also need API keys for:
+You will also need API keys for a model here are some potentially free options:
 - Google AI Studio (for Gemini models)
 - OpenRouter (for Longcat model)
 
-## Running a script
-
-### More Detailed Information
-- Be sure to find the README.md for each individual script's requirements and for more information.
-
-### Generic installation
+## Running the script
 
 1. Install dependencies:
     ```bash
@@ -36,5 +31,12 @@ You will also need API keys for:
 
 3. Run the script:
     ```bash
-    python conversational_ai/conversational_ai.py
+    python conversational_ai.py
     ```
+
+## What it does
+
+- Prompts the user for input in a loop.
+- Sends the input to a language model (Longcat via OpenRouter) to generate a response.
+- Prints the model's response.
+- Includes utility functions for summarization and explanation using different models.
