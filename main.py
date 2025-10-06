@@ -3,11 +3,10 @@ import os
 from dotenv import load_dotenv
 import dspy_classes as dspyc
 
-
 load_dotenv()
 
-gemini2_5_flash = dspy.LM("gemini/gemini-2.5-flash", api_key=os.getenv('google_ai_studio_key'), max_tokens=8192, num_retries=7)
 meituan_longcat_flash = dspy.LM("openrouter/meituan/longcat-flash-chat:free", api_base="https://openrouter.ai/api/v1", api_key=os.getenv('open_router_key'), max_tokens=8192, num_retries=7)
+gemini2_5_flash = dspy.LM("gemini/gemini-2.5-flash", api_key=os.getenv('google_ai_studio_key'), max_tokens=8192, num_retries=7)
 gemini2_5_pro = dspy.LM("gemini/gemini-2.5-pro", api_key=os.getenv('google_ai_studio_key'), max_tokens=8192, num_retries=7)
 dspy.configure(lm=gemini2_5_pro)
 
@@ -30,10 +29,8 @@ def longcat_conversation(text, history):
         return result
 
 
-
-
 def main():
-    print("Ask a question? Type exit when you are done.")
+    print("Have a conversation, type exit when you are done.")
     history = dspy.History(messages=[])
     while True:
         prompt = ""
