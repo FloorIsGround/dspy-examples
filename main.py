@@ -1,6 +1,7 @@
 import dspy
 import os
 from dotenv import load_dotenv
+import dspy_classes as dspyc
 
 
 load_dotenv()
@@ -22,25 +23,27 @@ def pro_add_depth(text):
         result = predictor(summary=text)
         return result['defined_explanation']
     
-def longcat_add_depth(text):
+def longcat_conversation(text, history):
     with dspy.context(lm=meituan_longcat_flash, max_tokens=4096):
-        predictor = dspy.Predict("prompt->response")
-        result = predictor(prompt=text)
-        return result['response']
+        predictor = dspy.Predict(dspyc.Conversation)
+        result = predictor(prompt=text, history=history)
+        return result
 
 
 
 
 def main():
     print("Ask a question? Type exit when you are done.")
+    history = dspy.History(messages=[])
     while True:
         prompt = ""
         prompt = input()
         if prompt == 'exit':
             return
         
-        response = longcat_add_depth(text)
-        print(response)
+        result = longcat_conversation(prompt, history)
+        print(result['response'])
+        history.messages.append({"prompt": prompt, **result})
 
 
 if __name__ == "__main__":
